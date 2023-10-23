@@ -11,9 +11,9 @@ import os
 
 
 def prepare_data():
-    (train_data, train_labels) = load_car_image_data()  
-    print(train_data.shape)
-    # print(train_labels)
+    (images_data_train,images_data_test, labels_data_train,labels_data_test)= load_car_image_data()  
+    print(images_data_test.shape)
+    print(labels_data_train)
     # train_data = train_data.astype('float32')/255
     # test_data = test_data.astype('float32')/255
     # train_labels = to_categorical(train_labels,10)
