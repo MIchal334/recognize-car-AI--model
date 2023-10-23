@@ -6,9 +6,9 @@ import cv2
 dictionar_with_car_image_path = '/home/michal/Desktop/photos/data/vehicles'
 dictionar_with_normal_image_path = '/home/michal/Desktop/photos/data/non-vehicles'
 image_file_extend = ('.png')
-x_size = 512
-y_size = 512
-frequency = 10
+x_size = 64
+y_size = 64
+frequency = 5
 
 def load_car_image_data():
     images_data_train = []
