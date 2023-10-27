@@ -8,13 +8,12 @@ from load_data import load_car_image_data
 from tensorflow.keras.utils import to_categorical
 import os
 from tensorflow.python.keras import backend
+from check_history import show_all_history
 
 
 
 def prepare_data():
     (images_data_train, images_data_test, labels_data_train,labels_data_test)= load_car_image_data()  
-    print(images_data_test.shape)
-    print(labels_data_train)
     images_data_train = images_data_train.astype('float32')/255
     images_data_test = images_data_test.astype('float32')/255
     labels_data_train = to_categorical(labels_data_train,2)
@@ -42,7 +41,8 @@ def get_model():
 
 def train_network(train_data,train_labels,test_data,test_labels):
     network = get_model()
-    network.fit(train_data,train_labels,batch_size = 16, epochs=15)
+    return network.fit(train_data,train_labels,batch_size = 12,
+    validation_data=(test_data,test_labels), epochs=32)
 
 
 
@@ -53,4 +53,5 @@ if __name__ == "__main__":
     backend.set_session(sess)
 
     (train_data, train_labels), (test_data, test_labels) = prepare_data()
-    train_network(train_data,train_labels,test_data,test_labels)
+    history = train_network(train_data,train_labels,test_data,test_labels)
+    show_all_history(history)
