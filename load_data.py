@@ -1,14 +1,14 @@
 import os
 import numpy as np
 import cv2
-
+import matplotlib.pyplot as plt
 
 dictionar_with_car_image_path = '/home/michal/Desktop/photos/data/vehicles'
 dictionar_with_normal_image_path = '/home/michal/Desktop/photos/data/non-vehicles'
 image_file_extend = ('.png')
-x_size = 64
-y_size = 64
-frequency = 5
+x_size = 128
+y_size = 128
+frequency = 10
 
 def load_car_image_data():
     images_data_train = []
