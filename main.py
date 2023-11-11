@@ -24,17 +24,18 @@ def get_model():
   model = models.Sequential() 
   model.add(layers.Conv2D(128, (3,3), activation = keras.activations.relu, input_shape = train_data[0].shape)) 
   model.add(layers.MaxPool2D((2,2))) 
-  model.add(layers.Conv2D(64, (3,3), activation = keras.activations.selu)) 
+  model.add(layers.Conv2D(64, (3,3), activation = keras.activations.relu)) 
+  model.add(layers.Dropout(0.5))
   model.add(layers.MaxPool2D((2,2))) 
   model.add(layers.Conv2D(32, (3,3), activation = keras.activations.elu)) 
   model.add(layers.Flatten()) 
-  model.add(layers.Dense(512, activation = keras.activations.selu)) 
-  model.add(layers.Dropout(0.2))
+#   model.add(layers.Dense(512, activation = keras.activations.selu)) 
+  model.add(layers.Dropout(0.5))
   model.add(layers.Dense(256,activation=keras.activations.elu))
   model.add(layers.Dense(64,activation=keras.activations.elu))
   model.add(layers.Dense(2, activation = keras.activations.sigmoid))
   # model.summary()
-  model.compile(optimizer= keras.optimizers.Adam(), loss = keras.losses.BinaryCrossentropy(from_logits=True), metrics = keras.metrics.AUC())
+  model.compile(optimizer= keras.optimizers.Adam(), loss = keras.losses.BinaryCrossentropy(from_logits=True), metrics = keras.metrics.Accuracy(name="accuracy", dtype=None))
   return model
 
 

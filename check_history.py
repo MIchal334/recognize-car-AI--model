@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 
 def show_all_history(history):
-    print(f"Training accuracy: {history.history['auc']}")
+    print(f'KEYS: {history.history.keys()}')
+    print(f"Training accuracy: {history.history['accuracy']}")
     print(f"Training loss: {history.history['loss']}")  
-    print(f"Validation accuracy: {history.history['val_auc']}")
+    print(f"Validation accuracy: {history.history['val_accuracy']}")
     print(f"Validation loss: {history.history['val_loss']}")
 
     plt.figure(1)
-    plt.plot(history.history['auc'])   
-    plt.plot(history.history['val_auc'])
+    plt.plot(history.history['accuracy'])   
+    plt.plot(history.history['val_accuracy'])
     plt.title('model accuracy')
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
