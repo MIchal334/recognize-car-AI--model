@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 dictionar_with_car_image_path = '/home/michal/Desktop/photos/data/vehicles'
 dictionar_with_normal_image_path = '/home/michal/Desktop/photos/data/non-vehicles'
-image_file_extend = ('.png')
+image_file_extend = ('.png','.jpg')
 x_size = 64
 y_size = 64
 frequency = 5
@@ -17,7 +17,11 @@ def load_car_image_data():
     labels_data_test = []
     (car_image_train, car_image_test, car_labels_train, car_labels_test) = __load_image_from_file_by_path(dictionar_with_car_image_path,1)
     (no_car_image_train, no_car_image_test, no_car_labels_train, no_car_labels_test) = __load_image_from_file_by_path(dictionar_with_normal_image_path,0)
-    
+    print(f'AMOUT OF CAR IMAGES TRAIN: {len(car_image_train)}')
+    print(f'AMOUT OF CAR IMAGES TETS: {len(car_image_test)}')
+    print(f'AMOUT OF NORMAL IMAGES TRAIN: {len(no_car_image_train)}')
+    print(f'AMOUT OF NORMAL IMAGES TETS: {len(no_car_image_test)}')
+
     images_data_train.extend(car_image_train)
     images_data_train.extend(no_car_image_train)
     labels_data_train.extend(car_labels_train)

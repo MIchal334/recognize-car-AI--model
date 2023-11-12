@@ -23,24 +23,20 @@ def prepare_data():
 
 def get_model(): 
   model = models.Sequential() 
-  model.add(layers.Conv2D(16, (4,4), activation = keras.activations.relu, input_shape = train_data[0].shape)) 
-  model.add(layers.Conv2D(16, (4,4), activation = keras.activations.relu)) 
+  model.add(layers.Conv2D(16, (4,4), activation = keras.activations.relu, input_shape = train_data[0].shape))  
   model.add(layers.MaxPool2D((3,3))) 
-  model.add(layers.Dropout(0.5))
- 
-  model.add(layers.Conv2D(8, (3,3), activation = keras.activations.relu)) 
-  model.add(layers.Conv2D(8, (3,3), activation = keras.activations.relu)) 
+  model.add(layers.Conv2D(4, (3,3), activation = keras.activations.elu)) 
+  model.add(layers.Conv2D(4, (3,3), activation = keras.activations.elu)) 
   model.add(layers.MaxPool2D((2,2))) 
   model.add(layers.Dropout(0.5))
   
   model.add(layers.Flatten())
-  model.add(layers.Dropout(0.5)) 
-  model.add(layers.Dense(8,activation=keras.activations.relu))
-  model.add(layers.Dense(6,activation=keras.activations.relu))
-  model.add(layers.Dense(4,activation=keras.activations.relu))
+  model.add(layers.Dense(4,activation=keras.activations.elu))
   model.add(layers.Dense(2, activation = keras.activations.sigmoid))
   model.summary()
-  model.compile(optimizer= keras.optimizers.Adam(), loss = keras.losses.BinaryCrossentropy(), metrics = keras.metrics.Accuracy(name="accuracy", dtype=None))
+  model.compile(optimizer=keras.optimizers.Adam(), 
+              loss=keras.losses.BinaryCrossentropy(), 
+              metrics=['accuracy'])
   return model
 
 
@@ -54,7 +50,7 @@ def train_network(train_data,train_labels,test_data,test_labels):
                                               verbose=1,
                                               save_best_only=True)
     return network.fit(train_data,train_labels,batch_size = 12,
-    validation_data=(test_data,test_labels), epochs=50, callbacks=[callback])
+    validation_data=(test_data,test_labels), epochs=30, callbacks=[callback])
 
 
 
@@ -68,7 +64,9 @@ if __name__ == "__main__":
     history = train_network(train_data,train_labels,test_data,test_labels)
     show_all_history(history)
 
-    loss, acc = model.evaluate(test_ds, verbose=1)
 
+    model = get_model()
     model.load_weights(checkpoint_filepath)
+    model.evaluate(test_data,test_labels)
+
     model.save('car_recognize_model.keras')
