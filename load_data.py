@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-dictionar_with_car_image_path = '/home/michal/Desktop/photos/data/vehicles'
+dictionar_with_car_image_path = '/home/michal/Desktop/photos/boxes_best'
 dictionar_with_normal_image_path = '/home/michal/Desktop/photos/data/non-vehicles'
 image_file_extend = ('.png','.jpg')
 x_size = 64
@@ -46,11 +46,13 @@ def __load_image_from_file_by_path(path: str, label: int):
     for img in os.listdir(path):
         if img.lower().endswith(image_file_extend):
             if itterator % frequency == 0:  
-                images_test.append(__load_cv2_image(path,img))
+                images_test.append(cv2.cvtColor(__load_cv2_image(path,img), cv2.COLOR_BGR2GRAY))
                 labels_test.append(label)
                 itterator = itterator + 1
                 continue
-            images_train.append(__load_cv2_image(path,img))
+
+
+            images_train.append(cv2.cvtColor(__load_cv2_image(path,img), cv2.COLOR_BGR2GRAY))
             labels_train.append(label)
             itterator = itterator + 1
     return (images_train,images_test,labels_train,labels_test)

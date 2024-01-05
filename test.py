@@ -7,18 +7,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # path_to_test_dictionary = '/home/michal/Desktop/photos/car_boxes/test_set'
-path_to_test_dictionary = '/home/michal/Desktop/photos/data/vehicles'
+path_to_test_dictionary = '/home/michal/Desktop/photos/auto_test'
+# path_to_test_dictionary = '/home/michal/Desktop/photos/non_auto_test'
+
+is_car_test = 1
 
 
 def show_test_set(network):
     test_set = __load_images()
-
+ 
     bad_amount = 0
     for img in test_set:
         image_prepared = __preapre_image_for_proccesing(img)
         result = network.predict(image_prepared)
-        if np.argmax(result) == 0:
+        class_max = np.argmax(result)
+        if class_max != is_car_test:
+            plt.imshow(img)
+            plt.show()
             bad_amount = bad_amount + 1
+        print(class_max)
 
     print(f'BAD:{bad_amount}')
 
@@ -27,6 +34,7 @@ def __preapre_image_for_proccesing(img):
     x_size = 64
     y_size = 64
     image = cv2.resize(img, (x_size, y_size))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image = image[np.newaxis, ...]
     return image.astype('float32')/255
 

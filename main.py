@@ -23,15 +23,19 @@ def prepare_data():
 
 def get_model(): 
   model = models.Sequential() 
-  model.add(layers.Conv2D(16, (4,4), activation = keras.activations.relu, input_shape = train_data[0].shape))  
+  model.add(layers.Conv2D(64, (4,4), activation = keras.activations.relu, input_shape = (64,64,1)))  
   model.add(layers.MaxPool2D((3,3))) 
-  model.add(layers.Conv2D(4, (3,3), activation = keras.activations.elu)) 
-  model.add(layers.Conv2D(4, (3,3), activation = keras.activations.elu)) 
+  model.add(layers.Conv2D(32, (3,3), activation = keras.activations.elu)) 
+  model.add(layers.Conv2D(16, (3,3), activation = keras.activations.elu)) 
   model.add(layers.MaxPool2D((2,2))) 
   model.add(layers.Dropout(0.5))
+  model.add(layers.Conv2D(16, (2,2), activation = keras.activations.relu)) 
+  model.add(layers.Conv2D(16, (2,2), activation = keras.activations.relu)) 
+  model.add(layers.MaxPool2D((2,2))) 
   
   model.add(layers.Flatten())
-  model.add(layers.Dense(4,activation=keras.activations.elu))
+  model.add(layers.Dense(16,activation=keras.activations.elu))
+  model.add(layers.Dense(4,activation=keras.activations.relu))
   model.add(layers.Dense(2, activation = keras.activations.sigmoid))
   model.summary()
   model.compile(optimizer=keras.optimizers.Adam(), 
@@ -49,8 +53,8 @@ def train_network(train_data,train_labels,test_data,test_labels):
                                               mode='max',
                                               verbose=1,
                                               save_best_only=True)
-    return network.fit(train_data,train_labels,batch_size = 12,
-    validation_data=(test_data,test_labels), epochs=30, callbacks=[callback])
+    return network.fit(train_data,train_labels,batch_size = 20,
+    validation_data=(test_data,test_labels), epochs=50, callbacks=[callback])
 
 
 
