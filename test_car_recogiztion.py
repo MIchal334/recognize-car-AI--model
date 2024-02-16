@@ -36,6 +36,7 @@ def __preapre_image_for_proccesing(img):
     image = cv2.resize(img, (x_size, y_size))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image = image[np.newaxis, ...]
+    image = np.expand_dims(image, axis=-1)
     return image.astype('float32')/255
 
 
